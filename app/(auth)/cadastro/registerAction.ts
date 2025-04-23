@@ -1,7 +1,6 @@
 'use server';
 import db from '@/lib/db'
 import { hashSync } from 'bcrypt-ts';
-import { error } from 'console';
 
 export default async function registerAction(_prevState: any, formData: FormData) {
     const entries = Array.from(formData.entries());
