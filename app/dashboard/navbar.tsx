@@ -2,7 +2,6 @@
 
 import Logo from '@/components/logo';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +12,11 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { User } from 'lucide-react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Form from 'next/form';
+import logoutAction from '../(auth)/(logout)/logoutAction';
+
 
 export default function Navbar({ userName }: { userName: string }) {
   const pathname = usePathname();
@@ -62,7 +65,9 @@ export default function Navbar({ userName }: { userName: string }) {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <button>Logout</button>
+                <Form action={logoutAction}>
+                  <button>Logout</button>
+                </Form>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
