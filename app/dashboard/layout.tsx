@@ -9,6 +9,7 @@ export default async function DashboardLayout({
 }) {
 
   const session = await auth();
+  const userName = session?.user?.name;
 
   if (!session) {
     redirect('/login');
@@ -16,7 +17,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Navbar userName={'Fulano de Tal'} />
+      <Navbar userName={userName ?? ''} />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {children}
       </main>
