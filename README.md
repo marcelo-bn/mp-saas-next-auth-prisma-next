@@ -74,3 +74,11 @@ O layout está no Figma e já está implementado no projeto. Você não precisar
 ### Pré requisitos
 
 - Conhecimentos em JavaScript, React e NextJs.
+
+
+### Comandos
+
+npx prisma init
+npx prisma generate
+npx prisma db push
+npx auth secret
