@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from './ui/card';
 import { Button } from './ui/button';
+import PaymentButton from './payment-button';
 
 export default function PricingCard() {
   return (
@@ -45,7 +46,7 @@ export default function PricingCard() {
         </ul>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Assine Agora</Button>
+        <PaymentButton>Alguma Coisa</PaymentButton>
       </CardFooter>
     </Card>
   );
