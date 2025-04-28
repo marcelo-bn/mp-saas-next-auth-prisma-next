@@ -1,4 +1,7 @@
+import { auth } from '@/auth';
+import { fetchSubscriptionByEmail } from '@/lib/stripe';
 import { Check } from 'lucide-react';
+import PaymentButton from './payment-button';
 import {
   Card,
   CardContent,
@@ -7,10 +10,12 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
-import { Button } from './ui/button';
-import PaymentButton from './payment-button';
 
-export default function PricingCard() {
+export default async function PricingCard() {
+  const session = await auth();
+  const userEmail = session?.user?.email as string;
+  const subscription = await fetchSubscriptionByEmail(userEmail);
+
   return (
     <Card className="w-[350px] text-left md:mt-20 mt-10">
       <CardHeader>
@@ -46,7 +51,11 @@ export default function PricingCard() {
         </ul>
       </CardContent>
       <CardFooter>
-        <PaymentButton>Alguma Coisa</PaymentButton>
+        {!subscription && (
+          <>
+            <PaymentButton>Quero ser PRO!</PaymentButton>
+          </>
+        )}
       </CardFooter>
     </Card>
   );
