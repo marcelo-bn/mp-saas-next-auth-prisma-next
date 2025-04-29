@@ -1,4 +1,6 @@
 import { auth } from '@/auth';
+import BannerWarning from '@/components/banner-warning';
+import PricingCard from '@/components/pricing-card';
 import {
   Card,
   CardContent,
@@ -8,6 +10,8 @@ import {
 } from '@/components/ui/card';
 import { fetchSubscriptionByEmail, translateSubscriptionStatus } from '@/lib/stripe';
 import { CreditCard, XCircle } from 'lucide-react';
+import Form from 'next/form';
+import cancelSubscriptionAction from './cancelSubscriptionAction';
 
 export default async function MySubscription() {
   const session = await auth();
@@ -17,16 +21,25 @@ export default async function MySubscription() {
   return (
     <>
       <h1 className="text-3xl font-bold mb-6">Minha Assinatura</h1>
-      <div className="flex gap-10">
-        <PlanCard subscription={subscription}/>
-        <ActionCard />
-      </div>
+        {subscription && (
+          <>
+            <div className="flex gap-10">
+              <PlanCard subscription={subscription}/>
+              <ActionCard subscription={subscription}/>
+            </div>
+          </>
+        )}
+        {!subscription && (
+          <>
+            <BannerWarning text="Para acessar o livro do mês, você precisa de uma assinatura ativa. Que tal assinar agora?" />
+            <PricingCard />
+          </>
+        )}
     </>
   );
 }
 
 function PlanCard({ subscription }: { subscription: any }) {
-  console.log(subscription)
   return (
     <Card className="max-w-md w-full">
       <CardHeader>
@@ -61,7 +74,7 @@ function PlanCard({ subscription }: { subscription: any }) {
   );
 }
 
-function ActionCard() {
+function ActionCard({ subscription }: { subscription: any }) {
   return (
     <Card className="w-full max-w-sm h-full">
       <CardHeader>
@@ -74,10 +87,13 @@ function ActionCard() {
             <CreditCard className="mr-2 h-5 w-5 text-gray-400" />
             Atualizar método de pagamento
           </button>
-          <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-            <XCircle className="mr-2 h-5 w-5" />
-            Cancelar assinatura
-          </button>
+          <Form action={cancelSubscriptionAction}>
+            <input type="hidden" name="subscriptionId" value={subscription.id} />
+            <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+              <XCircle className="mr-2 h-5 w-5" />
+              Cancelar assinatura
+            </button>
+          </Form>
         </div>
       </CardContent>
     </Card>

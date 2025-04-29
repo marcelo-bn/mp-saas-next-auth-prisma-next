@@ -2,12 +2,12 @@ import { auth } from '@/auth';
 import BannerWarning from '@/components/banner-warning';
 import PricingCard from '@/components/pricing-card';
 import { buttonVariants } from '@/components/ui/button';
+import { fetchSubscriptionByEmail } from '@/lib/stripe';
 import { cn } from '@/lib/utils';
 import { Download } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import bookImg from './book.png';
-import { fetchSubscriptionByEmail } from '@/lib/stripe';
 
 export default async function MonthlyBook() {
   const session = await auth();
